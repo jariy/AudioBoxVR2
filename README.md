@@ -1,10 +1,14 @@
-This project is no longer actively developed or maintained.
+This project was forked from
 
 # SoundStage VR
 
-SoundStage VR is a virtual reality music sandbox built specifically for room-scale VR. Whether you’re a professional DJ creating a new sound, or a hobbyist who wants to rock out on virtual drums, SoundStage gives you a diverse toolset to express yourself.
+SoundStage VR is a virtual reality music sandbox built specifically for room-scale VR. Whether you're a professional DJ creating a new sound, or a hobbyist who wants to rock out on virtual drums, SoundStage gives you a diverse toolset to express yourself.
 
-This is not an officially supported Google product.
+## Latest Features
+
+* Uses valve renderer adaptive MSAA and overscan settings which improves viewing quality
+* Added a realtime camera feed - this needs to be enabled in Steam - useful for seeing external instruments.
+
 
 ## Requirements
 * An HTC Vive or Oculus Touch running SteamVR
