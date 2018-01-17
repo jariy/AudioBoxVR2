@@ -94,12 +94,12 @@ public class ValveRealtimeLight : MonoBehaviour
 			return false;
 		}
 
-		if ( l.isBaked )
-		{
+		//if ( l.isBaked )
+		//{
 			// AV - Disabling this early-out because we may want lights to bake indirect and have realtime direct
 			//Debug.Log( "Skipping lightmapped light " + l.name );
 			//return false;
-		}
+		//}
 
 		if ( !m_bInCameraFrustum  )
 		{
