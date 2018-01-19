@@ -41,6 +41,9 @@ public class xmlUpdate
                         case "Lightrig":
                             serializer = new XmlSerializer(typeof(LightrigData), new XmlRootAttribute { ElementName = xmlNode.Name });
                             break;
+                        case "Realview":
+                            serializer = new XmlSerializer(typeof(RealviewData), new XmlRootAttribute { ElementName = xmlNode.Name });
+                            break;
                         case "Oscillator":
                             serializer = new XmlSerializer(typeof(OscillatorData), new XmlRootAttribute { ElementName = xmlNode.Name });
                             break;
@@ -127,6 +130,9 @@ public class xmlUpdate
                             break;
                         case "Lightrigs":
                             data[data.Count - 1].deviceType = menuItem.deviceType.Lightrig;
+                            break;
+                        case "Realviews":
+                            data[data.Count - 1].deviceType = menuItem.deviceType.Realview;
                             break;
                         case "Drums":
                             data[data.Count - 1].deviceType = menuItem.deviceType.Drum;

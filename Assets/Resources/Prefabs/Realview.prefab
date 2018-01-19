@@ -359,7 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4306766509294984}
   - component: {fileID: 82756020905035734}
-  - component: {fileID: 114516881288649392}
+  - component: {fileID: 114287758906150328}
   m_Layer: 9
   m_Name: Realview
   m_TagString: instrument
@@ -2006,6 +2006,27 @@ MonoBehaviour:
   far: {fileID: 0}
   near: {fileID: 0}
   jackHue: 0
+--- !u!114 &114287758906150328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818537833931300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18efd0441f358d4fa9a7ee1e089ac2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useNativeIfAvailable: 1
+  rtCam: {fileID: 20155351102288322}
+  realCam: {fileID: 1222412967590902}
+  previewCam: {fileID: 1222412967590902}
+  rtQuad: {fileID: 4430869948883226}
+  screenTrans: {fileID: 4524474203522328}
+  recLight: {fileID: 1922591708329116}
+  recMessage: {fileID: 1131127209892196}
+  broadcastButton: {fileID: 114429438879333944}
+  previewButton: {fileID: 114044811344856068}
 --- !u!114 &114402671298702150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2063,27 +2084,6 @@ MonoBehaviour:
   disregardStartToggled: 0
   changeOverlayGlow: 0
   isHit: 0
---- !u!114 &114516881288649392
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818537833931300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faa81ffb7cec35b439c005c1c77cb5f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useNativeIfAvailable: 1
-  rtCam: {fileID: 20155351102288322}
-  realCam: {fileID: 1222412967590902}
-  previewCam: {fileID: 1222412967590902}
-  rtQuad: {fileID: 4430869948883226}
-  screenTrans: {fileID: 4524474203522328}
-  recLight: {fileID: 1922591708329116}
-  recMessage: {fileID: 1131127209892196}
-  broadcastButton: {fileID: 114429438879333944}
-  previewButton: {fileID: 114044811344856068}
 --- !u!114 &114626865246120054
 MonoBehaviour:
   m_ObjectHideFlags: 1
