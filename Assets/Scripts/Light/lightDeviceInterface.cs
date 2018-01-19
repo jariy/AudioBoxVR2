@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 
 public class lightDeviceInterface : deviceInterface
 {
-    public Light targetLight;
+    public GameObject targetLight;
     omniJack input;
     signalGenerator externalPulse;
     float[] lastPlaySig;
@@ -67,10 +67,10 @@ public class lightDeviceInterface : deviceInterface
         lightPower = on;
         if (on)
         {
-            targetLight.enabled = true;
+            targetLight.SetActive(true);
         } else
         {
-            targetLight.enabled = false;
+            targetLight.SetActive(false);
         }
     }
 
@@ -89,8 +89,8 @@ public class lightDeviceInterface : deviceInterface
 
     public override InstrumentData GetData()
     {
-        CameraData data = new CameraData();
-        data.deviceType = menuItem.deviceType.Camera;
+        LightrigData data = new LightrigData();
+        data.deviceType = menuItem.deviceType.Lightrig;
         GetTransformData(data);
         data.inputID = input.transform.GetInstanceID();
         return data;
@@ -98,13 +98,13 @@ public class lightDeviceInterface : deviceInterface
 
     public override void Load(InstrumentData d)
     {
-        LightData data = d as LightData;
+        LightrigData data = d as LightrigData;
         base.Load(data);
         input.ID = data.inputID;
     }
 }
 
-public class LightData : InstrumentData
+public class LightrigData : InstrumentData
 {
     public int inputID;
 }
