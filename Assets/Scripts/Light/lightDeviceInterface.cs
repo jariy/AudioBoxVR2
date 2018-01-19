@@ -18,12 +18,15 @@ using System.Runtime.InteropServices;
 
 public class lightDeviceInterface : deviceInterface
 {
-    public GameObject targetLight;
+    public Light targetLight;
+    public dial colorDialRed, colorDialGreen, colorDialBlue;
     omniJack input;
     signalGenerator externalPulse;
     float[] lastPlaySig;
 
     bool activated = false;
+    // current values
+    float colorPercentRed, colorPercentGreen, colorPercentBlue;
 
     [DllImport("SoundStageNative")]
     public static extern int CountPulses(float[] buffer, int length, int channels, float[] lastSig);
@@ -53,6 +56,19 @@ public class lightDeviceInterface : deviceInterface
             if (hits % 2 != 0) togglelightPower(!lightPower);
             hits = 0;
         }
+
+        if (colorPercentRed != colorDialRed.percent) UpdateColor();
+        if (colorPercentBlue != colorDialBlue.percent) UpdateColor();
+        if (colorPercentGreen != colorDialGreen.percent) UpdateColor();
+    }
+
+    void UpdateColor()
+    {
+        colorPercentRed = colorDialRed.percent;
+        colorPercentGreen = colorDialGreen.percent;
+        colorPercentBlue = colorDialBlue.percent;
+        targetLight.color = new Color(colorPercentRed, colorPercentGreen, colorPercentBlue);
+
     }
 
     void OnDisable()
@@ -67,10 +83,10 @@ public class lightDeviceInterface : deviceInterface
         lightPower = on;
         if (on)
         {
-            targetLight.SetActive(true);
+            targetLight.intensity = 10;
         } else
         {
-            targetLight.SetActive(false);
+            targetLight.intensity = 0;
         }
     }
 
@@ -107,4 +123,5 @@ public class lightDeviceInterface : deviceInterface
 public class LightrigData : InstrumentData
 {
     public int inputID;
+    public float freq;
 }
