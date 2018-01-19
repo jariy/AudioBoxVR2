@@ -179,7 +179,12 @@ public class menuItem : manipObject {
       Destroy(g.transform.Find("screenFrame").gameObject);
     }
 
-    if (item == deviceType.Keyboard) {
+    if (item == deviceType.Realview)
+    {
+        g.transform.localRotation = Quaternion.Euler(0,180,0);
+    }
+
+        if (item == deviceType.Keyboard) {
       g.transform.localPosition = new Vector3(0.013f, 0, .026f);
       g.transform.localScale = Vector3.one * .08f;
       Destroy(g.transform.Find("KeyboardTimeline").gameObject);
