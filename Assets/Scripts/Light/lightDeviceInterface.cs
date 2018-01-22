@@ -20,6 +20,7 @@ public class lightDeviceInterface : deviceInterface
 {
     public Light targetLight;
     public dial colorDialRed, colorDialGreen, colorDialBlue;
+    public ParticleSystem system;
     public float intensityMultiplier = 2.0f;
     public float movementMultiplier = 0.1f;
     omniJack input;
@@ -62,6 +63,20 @@ public class lightDeviceInterface : deviceInterface
         targetLight.intensity = vol * intensityMultiplier;
         Vector3 rotation = new Vector3(vol * movementMultiplier, 0, 0);
         targetLight.transform.Rotate(rotation);
+
+        if (targetLight.intensity > 1) { DoEmit(); }
+    }
+
+    void DoEmit()
+    {
+        var emitParams = new ParticleSystem.EmitParams();
+        emitParams.startColor = targetLight.color;
+        emitParams.startSize = targetLight.intensity * 0.01f;
+        var main = system.main;
+        main.startSize = targetLight.intensity;
+        main.startSpeed = targetLight.intensity;
+        emitParams.position = system.transform.position;
+        system.Emit(emitParams, 1);
     }
 
     void UpdateColor()
@@ -125,6 +140,7 @@ public class lightDeviceInterface : deviceInterface
         LightrigData data = d as LightrigData;
         base.Load(data);
         input.ID = data.inputID;
+
         colorDialRed.percent = data.colorPercentRed;
         colorDialGreen.percent = data.colorPercentGreen;
         colorDialBlue.percent = data.colorPercentBlue;
