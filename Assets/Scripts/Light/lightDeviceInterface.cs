@@ -20,6 +20,8 @@ public class lightDeviceInterface : deviceInterface
 {
     public Light targetLight;
     public dial colorDialRed, colorDialGreen, colorDialBlue;
+    public float intensityMultiplier = 2.0f;
+    public float movementMultiplier = 0.1f;
     omniJack input;
     signalGenerator externalPulse;
     float[] lastPlaySig;
@@ -28,6 +30,7 @@ public class lightDeviceInterface : deviceInterface
     // current values
     float colorPercentRed, colorPercentGreen, colorPercentBlue;
 
+    private Vector3 startPos;
     [DllImport("SoundStageNative")]
     public static extern int CountPulses(float[] buffer, int length, int channels, float[] lastSig);
 
@@ -51,15 +54,14 @@ public class lightDeviceInterface : deviceInterface
     void Update()
     {
         if (input.signal != externalPulse) externalPulse = input.signal;
-        if (hits > 0)
-        {
-            if (hits % 2 != 0) togglelightPower(!lightPower);
-            hits = 0;
-        }
-
         if (colorPercentRed != colorDialRed.percent) UpdateColor();
         if (colorPercentBlue != colorDialBlue.percent) UpdateColor();
         if (colorPercentGreen != colorDialGreen.percent) UpdateColor();
+
+        //**TODO add intensity as a dial
+        targetLight.intensity = vol * intensityMultiplier;
+        Vector3 rotation = new Vector3(vol * movementMultiplier, 0, 0);
+        targetLight.transform.Rotate(rotation);
     }
 
     void UpdateColor()
@@ -73,33 +75,36 @@ public class lightDeviceInterface : deviceInterface
 
     void OnDisable()
     {
-        if (lightPower) togglelightPower(false);
-    }
 
-    bool lightPower = false;
-    public void togglelightPower(bool on)
-    {
-        if (lightPower == on) return;
-        lightPower = on;
-        if (on)
-        {
-            targetLight.intensity = 10;
-        } else
-        {
-            targetLight.intensity = 0;
-        }
     }
 
     int hits = 0;
+    float vol = 0;
     private void OnAudioFilterRead(float[] buffer, int channels)
     {
         if (externalPulse == null) return;
         double dspTime = AudioSettings.dspTime;
 
+
         float[] playBuffer = new float[buffer.Length];
         externalPulse.processBuffer(playBuffer, dspTime, channels);
 
-        hits += CountPulses(playBuffer, buffer.Length, channels, lastPlaySig);
+        int i = 0;
+        int samples = 0;
+        float total = 0;
+        vol = 0;
+        while (i < playBuffer.Length / channels)
+        {
+            float temp = playBuffer[i];
+            if (temp !=0)
+            {
+                samples++;
+                total += playBuffer[i];
+
+            }
+            i += channels;
+        }
+        if (samples!=0) vol = total;
     }
 
 
@@ -109,6 +114,9 @@ public class lightDeviceInterface : deviceInterface
         data.deviceType = menuItem.deviceType.Lightrig;
         GetTransformData(data);
         data.inputID = input.transform.GetInstanceID();
+        data.colorPercentRed = colorDialRed.percent;
+        data.colorPercentGreen = colorDialGreen.percent;
+        data.colorPercentBlue = colorDialBlue.percent;
         return data;
     }
 
@@ -117,11 +125,14 @@ public class lightDeviceInterface : deviceInterface
         LightrigData data = d as LightrigData;
         base.Load(data);
         input.ID = data.inputID;
+        colorDialRed.percent = data.colorPercentRed;
+        colorDialGreen.percent = data.colorPercentGreen;
+        colorDialBlue.percent = data.colorPercentBlue;
     }
 }
 
 public class LightrigData : InstrumentData
 {
     public int inputID;
-    public float freq;
+    public float colorPercentRed, colorPercentGreen, colorPercentBlue;
 }
