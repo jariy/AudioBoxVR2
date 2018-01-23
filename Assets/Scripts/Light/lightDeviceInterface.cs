@@ -19,9 +19,9 @@ using System.Runtime.InteropServices;
 public class lightDeviceInterface : deviceInterface
 {
     public Light targetLight;
-    public dial colorDialRed, colorDialGreen, colorDialBlue;
-    public ParticleSystem system;
+    public dial colorDialRed, colorDialGreen, colorDialBlue, maxIntensityDial;
     public float intensityMultiplier = 2.0f;
+    public float maxIntensity = 5f;
     public float movementMultiplier = 0.1f;
     omniJack input;
     signalGenerator externalPulse;
@@ -59,24 +59,12 @@ public class lightDeviceInterface : deviceInterface
         if (colorPercentBlue != colorDialBlue.percent) UpdateColor();
         if (colorPercentGreen != colorDialGreen.percent) UpdateColor();
 
-        //**TODO add intensity as a dial
-        targetLight.intensity = vol * intensityMultiplier;
+        float newIntensity = vol * intensityMultiplier;
+        if (newIntensity > maxIntensityDial.percent * maxIntensity) newIntensity = maxIntensityDial.percent * maxIntensity;
+        targetLight.intensity = newIntensity;
+
         Vector3 rotation = new Vector3(vol * movementMultiplier, 0, 0);
-        targetLight.transform.Rotate(rotation);
-
-        if (targetLight.intensity > 1) { DoEmit(); }
-    }
-
-    void DoEmit()
-    {
-        var emitParams = new ParticleSystem.EmitParams();
-        emitParams.startColor = targetLight.color;
-        emitParams.startSize = targetLight.intensity * 0.01f;
-        var main = system.main;
-        main.startSize = targetLight.intensity;
-        main.startSpeed = targetLight.intensity;
-        emitParams.position = system.transform.position;
-        system.Emit(emitParams, 1);
+        //targetLight.transform.Rotate(rotation);
     }
 
     void UpdateColor()
@@ -85,7 +73,6 @@ public class lightDeviceInterface : deviceInterface
         colorPercentGreen = colorDialGreen.percent;
         colorPercentBlue = colorDialBlue.percent;
         targetLight.color = new Color(colorPercentRed, colorPercentGreen, colorPercentBlue);
-
     }
 
     void OnDisable()
@@ -144,6 +131,7 @@ public class lightDeviceInterface : deviceInterface
         colorDialRed.percent = data.colorPercentRed;
         colorDialGreen.percent = data.colorPercentGreen;
         colorDialBlue.percent = data.colorPercentBlue;
+        maxIntensityDial.percent = data.maxIntensity;
     }
 }
 
@@ -151,4 +139,5 @@ public class LightrigData : InstrumentData
 {
     public int inputID;
     public float colorPercentRed, colorPercentGreen, colorPercentBlue;
+    public float maxIntensity;
 }
