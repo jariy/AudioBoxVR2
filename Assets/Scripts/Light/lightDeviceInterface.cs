@@ -53,12 +53,6 @@ public class lightDeviceInterface : deviceInterface
     void Start()
     {
         originalPosition = targetBay.transform.position;
-        locationDialX.percent = 0.5f;
-        locationDialY.percent = 0.5f;
-        locationDialZ.percent = 0.5f;
-        rotationDialX.percent = 0.5f;
-        rotationDialY.percent = 0f;
-        rotationDialZ.percent = 0.5f;
     }
 
     void OnDestroy()
