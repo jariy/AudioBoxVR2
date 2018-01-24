@@ -6,9 +6,25 @@ SoundStage VR is a virtual reality music sandbox built specifically for room-sca
 
 ## Latest Features
 
-* Uses valve renderer adaptive MSAA and overscan settings which improves viewing quality
+* Uses valve renderer adaptive MSAA
 * Added a realtime camera feed - this needs to be enabled in Steam - useful for seeing external instruments.
 * Added a spotlight that can be triggered using a pulse.
+
+## Proposed Roadmap
+visuals
+ mesh / fbx viewer
+ particle generator
+
+enhancements
+ mixer aux to headphones
+ drum velocity
+ teleport
+ environment selector
+
+instruments
+ chord sequencer - simple buttons with chords in chosen key
+ physics ball - creates pulse on collision
+ video loop and scrubber
 
 
 ## Requirements
