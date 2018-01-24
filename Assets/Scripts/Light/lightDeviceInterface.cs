@@ -119,6 +119,7 @@ public class lightDeviceInterface : deviceInterface
         data.colorPercentRed = colorDialRed.percent;
         data.colorPercentGreen = colorDialGreen.percent;
         data.colorPercentBlue = colorDialBlue.percent;
+        data.maxIntensity = maxIntensityDial.percent;
         return data;
     }
 
