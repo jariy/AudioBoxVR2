@@ -19,10 +19,13 @@ using System.Runtime.InteropServices;
 public class lightDeviceInterface : deviceInterface
 {
     public Light targetLight;
+    public GameObject targetBay;
     public dial colorDialRed, colorDialGreen, colorDialBlue, maxIntensityDial;
+    public dial locationDialX, locationDialY, locationDialZ;
+    public dial rotationDialX, rotationDialY, rotationDialZ;
     public float intensityMultiplier = 2.0f;
     public float maxIntensity = 5f;
-    public float movementMultiplier = 0.1f;
+    public float movementMultiplier = 100f;
     omniJack input;
     signalGenerator externalPulse;
     float[] lastPlaySig;
@@ -30,6 +33,10 @@ public class lightDeviceInterface : deviceInterface
     bool activated = false;
     // current values
     float colorPercentRed, colorPercentGreen, colorPercentBlue;
+    float locationX, locationY, locationZ;
+    float rotationX, rotationY, rotationZ;
+
+    Vector3 originalPosition;
 
     private Vector3 startPos;
     [DllImport("SoundStageNative")]
@@ -40,11 +47,18 @@ public class lightDeviceInterface : deviceInterface
         base.Awake();
         lastPlaySig = new float[] { 0, 0 };
         input = GetComponentInChildren<omniJack>();
+
     }
 
     void Start()
     {
-
+        originalPosition = targetBay.transform.position;
+        locationDialX.percent = 0.5f;
+        locationDialY.percent = 0.5f;
+        locationDialZ.percent = 0.5f;
+        rotationDialX.percent = 0.5f;
+        rotationDialY.percent = 0f;
+        rotationDialZ.percent = 0.5f;
     }
 
     void OnDestroy()
@@ -55,16 +69,24 @@ public class lightDeviceInterface : deviceInterface
     void Update()
     {
         if (input.signal != externalPulse) externalPulse = input.signal;
+
+        //**TODO implement input overrides for dials from sound source
+
         if (colorPercentRed != colorDialRed.percent) UpdateColor();
         if (colorPercentBlue != colorDialBlue.percent) UpdateColor();
         if (colorPercentGreen != colorDialGreen.percent) UpdateColor();
 
+        if (locationX != locationDialX.percent) UpdateLocation();
+        if (locationY != locationDialY.percent) UpdateLocation();
+        if (locationZ != locationDialZ.percent) UpdateLocation();
+
+        if (rotationX != rotationDialX.percent) UpdateRotation();
+        if (rotationY != rotationDialY.percent) UpdateRotation();
+        if (rotationZ != rotationDialZ.percent) UpdateRotation();
+
         float newIntensity = vol * intensityMultiplier;
         if (newIntensity > maxIntensityDial.percent * maxIntensity) newIntensity = maxIntensityDial.percent * maxIntensity;
         targetLight.intensity = newIntensity;
-
-        Vector3 rotation = new Vector3(vol * movementMultiplier, 0, 0);
-        //targetLight.transform.Rotate(rotation);
     }
 
     void UpdateColor()
@@ -73,6 +95,24 @@ public class lightDeviceInterface : deviceInterface
         colorPercentGreen = colorDialGreen.percent;
         colorPercentBlue = colorDialBlue.percent;
         targetLight.color = new Color(colorPercentRed, colorPercentGreen, colorPercentBlue);
+    }
+
+    void UpdateLocation()
+    {
+        locationX = (locationDialX.percent * 100 * movementMultiplier) - 100 * movementMultiplier / 2;
+        locationY = (locationDialY.percent * 100 * movementMultiplier) - 100 * movementMultiplier / 2;
+        locationZ = (locationDialZ.percent * 100 * movementMultiplier) - 100 * movementMultiplier / 2;
+        Vector3 newPosition = new Vector3(locationX, locationY, locationZ);
+        targetBay.transform.localPosition = newPosition;
+    }
+
+    void UpdateRotation()
+    {
+        rotationX = (rotationDialX.percent * 360);
+        rotationY = (rotationDialY.percent * 360);
+        rotationZ = (rotationDialZ.percent * 360);
+        Vector3 newPosition = new Vector3(rotationX, rotationY, rotationZ);
+        targetBay.transform.localEulerAngles = newPosition;
     }
 
     void OnDisable()
@@ -120,6 +160,12 @@ public class lightDeviceInterface : deviceInterface
         data.colorPercentGreen = colorDialGreen.percent;
         data.colorPercentBlue = colorDialBlue.percent;
         data.maxIntensity = maxIntensityDial.percent;
+        data.locationX = locationDialX.percent;
+        data.locationY = locationDialY.percent;
+        data.locationZ = locationDialZ.percent;
+        data.rotationX = rotationDialX.percent;
+        data.rotationY = rotationDialY.percent;
+        data.rotationZ = rotationDialZ.percent;
         return data;
     }
 
@@ -133,6 +179,12 @@ public class lightDeviceInterface : deviceInterface
         colorDialGreen.percent = data.colorPercentGreen;
         colorDialBlue.percent = data.colorPercentBlue;
         maxIntensityDial.percent = data.maxIntensity;
+        locationDialX.percent = data.locationX;
+        locationDialY.percent = data.locationY;
+        locationDialZ.percent = data.locationZ;
+        rotationDialX.percent = data.rotationX;
+        rotationDialY.percent = data.rotationY;
+        rotationDialZ.percent = data.rotationZ;
     }
 }
 
@@ -141,4 +193,6 @@ public class LightrigData : InstrumentData
     public int inputID;
     public float colorPercentRed, colorPercentGreen, colorPercentBlue;
     public float maxIntensity;
+    public float locationX, locationY, locationZ;
+    public float rotationX, rotationY, rotationZ;
 }
