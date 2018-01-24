@@ -654,6 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4245343370238872}
   - component: {fileID: 108193420741478686}
+  - component: {fileID: 114353957831672652}
   m_Layer: 0
   m_Name: Light1
   m_TagString: Untagged
@@ -4044,6 +4045,31 @@ MonoBehaviour:
   customColor: {r: 0, g: 0.04827571, b: 1, a: 0}
   externalHue: 0
   hue: 0.65
+--- !u!114 &114353957831672652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1599963055537886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafc90245bfe9e2408e358f71deace2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SampleCount: 8
+  ScatteringCoef: 0.5
+  ExtinctionCoef: 0.01
+  SkyboxExtinctionCoef: 0.9
+  MieG: 0.1
+  HeightFog: 0
+  HeightScale: 0.1
+  GroundLevel: 0
+  Noise: 0
+  NoiseScale: 0.015
+  NoiseIntensity: 1
+  NoiseIntensityOffset: 0.3
+  NoiseVelocity: {x: 3, y: 3}
+  MaxRayLength: 400
 --- !u!114 &114446264543326546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4216,7 +4242,6 @@ MonoBehaviour:
   colorDialGreen: {fileID: 114714970397136990}
   colorDialBlue: {fileID: 114307218227561314}
   maxIntensityDial: {fileID: 114864674457009510}
-  system: {fileID: 0}
   intensityMultiplier: 2
   maxIntensity: 5
   movementMultiplier: 0.5
