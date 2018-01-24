@@ -11,20 +11,20 @@ SoundStage VR is a virtual reality music sandbox built specifically for room-sca
 * Added a spotlight that can be triggered using a pulse.
 
 ## Proposed Roadmap
-visuals
- mesh / fbx viewer
- particle generator
+# visuals
+ * mesh / fbx viewer
+ * particle generator
 
-enhancements
- mixer aux to headphones
- drum velocity
- teleport
- environment selector
+# enhancements
+ * mixer aux to headphones
+ * drum velocity
+ * teleport
+ * environment selector
 
-instruments
- chord sequencer - simple buttons with chords in chosen key
- physics ball - creates pulse on collision
- video loop and scrubber
+# instruments
+ * chord sequencer - simple buttons with chords in chosen key
+ * physics ball - creates pulse on collision
+ * video loop and scrubber
 
 
 ## Requirements
