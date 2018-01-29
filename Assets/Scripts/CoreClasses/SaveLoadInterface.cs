@@ -192,6 +192,7 @@ public class SaveLoadInterface : MonoBehaviour {
 [XmlInclude(typeof(ADSRData))]
 [XmlInclude(typeof(RealviewData))]
 [XmlInclude(typeof(LightrigData))]
+[XmlInclude(typeof(ParticlerigData))]
 public class InstrumentData {
   public int ID;
   public menuItem.deviceType deviceType;

@@ -38,6 +38,9 @@ public class xmlUpdate
                     Debug.Log(xmlNode.Name);
                     switch (xmlNode.Name)
                     {
+                        case "Particlerig":
+                            serializer = new XmlSerializer(typeof(ParticlerigData), new XmlRootAttribute { ElementName = xmlNode.Name });
+                            break;
                         case "Lightrig":
                             serializer = new XmlSerializer(typeof(LightrigData), new XmlRootAttribute { ElementName = xmlNode.Name });
                             break;
