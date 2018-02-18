@@ -76,7 +76,7 @@ public class drumDeviceInterface : deviceInterface {
        defaultAudioSource.PlayOneShot(offClip, velocity);
       }
     }
-    drumSig.setKeyActive(on, ID);
+    drumSig.setKeyActive(on, ID, velocity);
   }
 }
 public class DrumData : InstrumentData {
