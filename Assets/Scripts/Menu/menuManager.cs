@@ -74,12 +74,14 @@ public class menuManager : MonoBehaviour {
     active = on;
   }
 
-  int rowLength = 5;
+  int rowLength = 6;
 
   void loadMenu() {
+        //int length = menuItems.Length; 
+        int length = 12; 
     menuItems = new GameObject[(int)menuItem.deviceType.Max];
-    menuItemScripts = new menuItem[menuItems.Length];
-    for (int i = 0; i < menuItems.Length; i++) {
+    menuItemScripts = new menuItem[length/*menuItems.Length*/];
+    for (int i = 0; i < length/*menuItems.Length*/; i++) {
       menuItems[i] = Instantiate(item, Vector3.zero, Quaternion.identity) as GameObject;
       menuItems[i].transform.parent = rootNode.transform;
       menuItem m = menuItems[i].GetComponent<menuItem>();
@@ -90,9 +92,11 @@ public class menuManager : MonoBehaviour {
     int tempCount = 0;
     float h = 0;
     float arc = 37.5f;
-    while (tempCount < menuItems.Length) {
+    while (tempCount < length/*menuItems.Length*/)
+        {
       for (int i = 0; i < rowLength; i++) {
-        if (tempCount < menuItems.Length) {
+        if (tempCount < length/*menuItems.Length*/)
+                {
           menuItems[tempCount].transform.localPosition = Quaternion.Euler(0, (arc / rowLength) * (i - rowLength / 2f) + (arc / rowLength) / 2f, 0) * (Vector3.forward * -.5f) - (Vector3.forward * -.5f) + Vector3.up * h;
           menuItems[tempCount].transform.rotation = Quaternion.Euler(0, (arc / rowLength) * (i - rowLength / 2f) + (arc / rowLength) / 2f, 0);
         }
@@ -118,15 +122,17 @@ public class menuManager : MonoBehaviour {
   public bool midiOutEnabled = false;
   float openSpeed = 3;
   public void toggleMidiOut(bool on) {
-    PlayerPrefs.SetInt("midiOut", on ? 1 : 0);
+        int length = 12;
+        PlayerPrefs.SetInt("midiOut", on ? 1 : 0);
     midiOutEnabled = on;
     openSpeed = on ? 2 : 3;
-    menuItemScripts[menuItemScripts.Length - 1].Appear(on);
+    menuItemScripts[length/*menuItems.Length*/ - 1].Appear(on);
   }
 
   Coroutine activationCoroutine;
   IEnumerator activationRoutine(bool on, Transform pad) {
-    float timer = 0;
+        int length = 12;
+        float timer = 0;
     if (on) {
       _audioSource.PlayOneShot(openClip);
 
@@ -136,7 +142,7 @@ public class menuManager : MonoBehaviour {
       metronomeNode.SetActive(false);
 
       List<int> remaining = new List<int>();
-      for (int i = 0; i < menuItemScripts.Length; i++) {
+      for (int i = 0; i < length/*menuItems.Length*/; i++) {
         remaining.Add(i);
         menuItemScripts[i].transform.localScale = Vector3.zero;
       }
@@ -144,7 +150,7 @@ public class menuManager : MonoBehaviour {
 
       while (timer < 1) {
         timer = Mathf.Clamp01(timer + Time.deltaTime * 1.5f);
-        for (int i = 0; i < menuItemScripts.Length; i++) {
+        for (int i = 0; i < length/*menuItems.Length*/; i++) {
           if (remaining.Contains(i)) {
             if (timer / openSpeed > Vector3.Distance(startPos, menuItemScripts[i].transform.position)) {
               menuItemScripts[i].Appear(on);
@@ -167,7 +173,7 @@ public class menuManager : MonoBehaviour {
       trashNode.SetActive(false);
       settingsNode.SetActive(false);
       metronomeNode.SetActive(false);
-      for (int i = 0; i < menuItems.Length; i++) {
+      for (int i = 0; i < length/*menuItems.Length*/; i++) {
         menuItemScripts[i].Appear(on);
       }
 
@@ -206,7 +212,7 @@ public class menuManager : MonoBehaviour {
   public bool buttonEvent(int controller, Transform pad) {
     bool on = true;
 
-    if (controller != lastController) {
+    if (controller == lastController) {
       if (!simple) Activate(true, pad);
       else SimpleActivate(true, pad);
     } else {

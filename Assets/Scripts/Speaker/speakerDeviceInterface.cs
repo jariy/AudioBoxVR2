@@ -21,7 +21,8 @@ public class speakerDeviceInterface : deviceInterface {
   speaker output;
   public GameObject speakerRim;
   public AudioSource audio;
-
+  //public GameObject VolumeSlider;
+  public sliderNotched unitSlider;
   SpeakerData data;
 
   public override void Awake() {
@@ -30,10 +31,12 @@ public class speakerDeviceInterface : deviceInterface {
     input = GetComponentInChildren<omniJack>();
     speakerRim.GetComponent<Renderer>().material.SetFloat("_EmissionGain", .45f);
     speakerRim.SetActive(false);
+    unitSlider.switchVal = (int)output.volume; 
   }
 
   void Start() {
     audio.spatialize = (masterControl.instance.BinauralSetting != masterControl.BinauralMode.None);
+    
   }
 
   public void Activate(int[] prevIDs) {
@@ -44,7 +47,11 @@ public class speakerDeviceInterface : deviceInterface {
   float lastScale = 0;
 
   void Update() {
-    if (output.incoming != input.signal) {
+    if (unitSlider.switchVal != output.volume)
+        {
+            output.volume = unitSlider.switchVal; 
+        }
+            if (output.incoming != input.signal) {
       output.incoming = input.signal;
       if (output.incoming == null) speakerRim.SetActive(false);
       else speakerRim.SetActive(true);

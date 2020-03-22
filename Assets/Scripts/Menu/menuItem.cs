@@ -31,21 +31,24 @@ public class menuItem : manipObject {
   bool disabled = false;
 
   public enum deviceType {
+        Oscillator, 
+        Speaker, 
+        Sampler,
+        Mixer, 
+        Drum,
+        Keyboard,
+        Sequencer,
+        Tapes,
+        Splitter,
+        Timeline,
+        TapeGroup,
+    
     Particlerig,
     Lightrig,
     Realview,
-    Oscillator,
-    Speaker,
-    Sampler,
     Recorder,
-    Mixer,
-    Drum,
-    Keyboard,
-    Sequencer,
     Maracas,
     ControlCube,
-    Tapes,
-    Splitter,
     Valve,
     TouchPad,
     XyloRoll,
@@ -56,12 +59,11 @@ public class menuItem : manipObject {
     Noise,
     Looper,
     Airhorn,
-    Timeline,
+    
     ADSR,
     MIDIIN,
     MIDIOUT,
     Max,
-    TapeGroup,
     Pano
   };
 
@@ -100,11 +102,12 @@ public class menuItem : manipObject {
     symbol.material.SetTexture("_MainTex", tex);
     itemPrefab = Resources.Load("Prefabs/" + item.ToString()) as GameObject;
     label.text = item.ToString();
-    if (item == deviceType.Valve) label.text = "Gate";
+    //if (item == deviceType.Valve) label.text = "Gate";
     if (item == deviceType.MIDIIN) label.text = "MIDI IN";
     if (item == deviceType.MIDIOUT) label.text = "MIDI OUT";
     if (item == deviceType.Sequencer) label.text = "Drum Machine";
     if (item == deviceType.Timeline) label.text = "Sequencer";
+    //if (item == deviceType.Wall) label.text = "Wall"; 
     label.gameObject.SetActive(false);
     symbol.gameObject.SetActive(false);
     GameObject g = Instantiate(itemPrefab, transform.position, transform.rotation) as GameObject;
@@ -137,6 +140,17 @@ public class menuItem : manipObject {
       Destroy(g);
       g = tape;
     }
+    /*
+    if(item == deviceType.Wall)
+        {
+            g.transform.localPosition = new Vector3(0, 0, 0.02f);
+            g.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            //GameObject Wall = Instantiate(Resources.Load("Prefabs/Wall") as GameObject, transform, false) as GameObject;
+            //Destroy(g);
+            //g = Wall;
+        }
+    */
+          
 
     if (item == deviceType.Timeline) {
       GameObject tl = Instantiate(Resources.Load("Prefabs/timelineRep") as GameObject, transform, false) as GameObject;
@@ -170,7 +184,7 @@ public class menuItem : manipObject {
     g.tag = "Untagged";
     g.transform.localScale = g.transform.localScale / (size.magnitude * 20);
     g.transform.localPosition = g.transform.localPosition + Vector3.forward * .02f;
-
+/*
     if (item == deviceType.Maracas) g.transform.localPosition = new Vector3(0, -.02f, .02f);
 
     if (item == deviceType.Camera) {
@@ -180,11 +194,11 @@ public class menuItem : manipObject {
       Destroy(g.transform.Find("screenFrame").gameObject);
     }
 
-    if (item == deviceType.Realview)
+   if (item == deviceType.Realview)
     {
         g.transform.localRotation = Quaternion.Euler(0,180,0);
     }
-
+    
         if (item == deviceType.Keyboard) {
       g.transform.localPosition = new Vector3(0.013f, 0, .026f);
       g.transform.localScale = Vector3.one * .08f;
@@ -199,18 +213,18 @@ public class menuItem : manipObject {
       Destroy(g.transform.Find("OscillatorBank").gameObject);
       Destroy(g.transform.Find("ADSR").gameObject);
     }
-
+    */
     if (item == deviceType.MIDIOUT) {
       Destroy(g.transform.Find("CChandle").gameObject);
       Destroy(g.transform.Find("NOTEhandle").gameObject);
     }
-
+    /*
     if (item == deviceType.Airhorn) {
       g.transform.localPosition = new Vector3(-0.005f, -.018f, 0.02f);
       g.transform.localRotation = Quaternion.Euler(0, 90, 0);
       g.transform.localScale = Vector3.one * .14f;
     }
-
+    */
     if (item == deviceType.Tapes) {
       g.transform.localPosition = new Vector3(0, 0, 0.02f);
       g.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -219,18 +233,22 @@ public class menuItem : manipObject {
       g.transform.localPosition = new Vector3(0, 0, 0.02f);
       g.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
+    /*
     if (item == deviceType.Filter) {
       g.transform.localPosition = new Vector3(.015f, 0, .02f);
       g.transform.localRotation = Quaternion.Euler(0, 180, 0);
     }
+    */
     if (item == deviceType.Splitter) {
       g.transform.localPosition = new Vector3(.0185f, 0, .02f);
     }
     if (item == deviceType.Sequencer) {
       g.transform.localScale = Vector3.one * .166f;
     }
+    /*
     if (item == deviceType.ControlCube) g.transform.localPosition = new Vector3(0, -.01f, .024f);
     if (item == deviceType.Reverb) g.transform.localPosition = new Vector3(0, -0.0175f, .02f);
+    */
     if (item == deviceType.Drum) {
       g.transform.localPosition = new Vector3(0, 0, .026f);
       g.transform.localRotation = Quaternion.Euler(40, 0, 0);
@@ -281,7 +299,7 @@ public class menuItem : manipObject {
 
     if (item == deviceType.Tapes) {
       g.transform.Translate(.1f, .02f, -.185f, Space.Self);
-    } else if (item != deviceType.Filter && item != deviceType.Airhorn && item != deviceType.ADSR) g.transform.Rotate(0, 180, 0, Space.Self);
+    } //else if (item != deviceType.Filter && item != deviceType.Airhorn && item != deviceType.ADSR) g.transform.Rotate(0, 180, 0, Space.Self);
 
     manipulatorObj.GetComponent<manipulator>().ForceGrab(g.GetComponentInChildren<handle>());
   }

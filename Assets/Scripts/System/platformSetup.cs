@@ -18,15 +18,15 @@ using System.Collections;
 public class platformSetup : MonoBehaviour {
   public GameObject hmdPrefab, controllerPrefab;
 
-  public Transform hmdTargetVive, controllerLTargetVive, controllerRTargetVive;
-  public Transform hmdTargetOculus, controllerLTargetOculus, controllerRTargetOculus;
+  //public Transform hmdTargetVive, controllerLTargetVive, controllerRTargetVive;
+  //public Transform hmdTargetOculus, controllerLTargetOculus, controllerRTargetOculus;
   public GameObject hiresCamSelect;
 
   manipulator[] manips = new manipulator[2];
   void Awake() {
     masterControl MC = GetComponent<masterControl>();
 
-    if (MC.currentPlatform == masterControl.platform.Vive) {
+    /*if (MC.currentPlatform == masterControl.platform.Vive) {
 
       Instantiate(hmdPrefab, hmdTargetVive, false);
       manips[0] = (Instantiate(controllerPrefab, controllerLTargetVive, false) as GameObject).GetComponentInChildren<manipulator>();
@@ -35,8 +35,9 @@ public class platformSetup : MonoBehaviour {
       manips[0].transform.parent.localPosition = Vector3.zero;
       manips[1].transform.parent.localPosition = Vector3.zero;
 
-      if (SteamVR.instance.hmd_TrackingSystemName == "oculus") oculusSwitch();
+      //if (SteamVR.instance.hmd_TrackingSystemName == "oculus") oculusSwitch();
     }
+    */
   }
 
   void oculusSwitch() {
@@ -46,7 +47,7 @@ public class platformSetup : MonoBehaviour {
   }
 
   void Start() {
-    manips[0].toggleTips(false);
+    //manips[0].toggleTips(false);
   }
 
 }

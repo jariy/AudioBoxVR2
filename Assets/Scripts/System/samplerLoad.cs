@@ -27,7 +27,7 @@ public class samplerLoad : MonoBehaviour {
   public string CurTapeLabel;
   public string CurFile;
 
-  public embeddedSpeaker miniSpeaker;
+  //public embeddedSpeaker miniSpeaker; disable minispeakers
 
   Material deckMat;
   Color deckLight;
@@ -46,7 +46,7 @@ public class samplerLoad : MonoBehaviour {
 
     deckOutline.gameObject.SetActive(false);
 
-    if (miniSpeaker != null) miniSpeaker.updateSecondary(false);
+    //if (miniSpeaker != null) miniSpeaker.updateSecondary(false);
   }
 
   void Start() {
@@ -65,7 +65,7 @@ public class samplerLoad : MonoBehaviour {
     currentTape = t;
     CurTapeLabel = t.label;
     CurFile = t.filename;
-    if (miniSpeaker != null) miniSpeaker.updateSecondary(true);
+    //if (miniSpeaker != null) miniSpeaker.updateSecondary(true);
     LoadClip(t.filename);
   }
 
@@ -95,7 +95,7 @@ public class samplerLoad : MonoBehaviour {
         StopCoroutine(_streamRoutine);
       }
 
-      if (miniSpeaker != null) miniSpeaker.updateSecondary(false);
+      //if (miniSpeaker != null) miniSpeaker.updateSecondary(false);
 
       // unallocate memory
       m_ClipHandle.Free();
