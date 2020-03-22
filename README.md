@@ -1,8 +1,8 @@
-This project was forked from
+This project was forked from Soundstage VR
 
 # AudioBoxVR
 
-SoundStage VR is a virtual reality music sandbox built specifically for room-scale VR. Whether you're a professional DJ creating a new sound, or a hobbyist who wants to rock out on virtual drums, SoundStage gives you a diverse toolset to express yourself.
+AudioBox VR is a virtual reality music sandbox built specifically for room-scale VR based on its predecestor Soundstage VR. Whether you're a professional DJ creating a new sound, or a hobbyist who wants to rock out on virtual drums, AudioBox VR gives you a diverse toolset to express yourself.
 
 ## Latest Features
 
